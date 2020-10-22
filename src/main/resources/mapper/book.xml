@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.mapper.BookMapper">
+    <!-- 책등록-->
+    <insert id="insertBook" parameterType="hashmap">
+        insert book(book_name, book_amount, book_price, book_img)
+        values (#{book_name}, #{book_amount}, #{book_price}, #{book_img})
+    </insert>
+
+    <!--최근에 3개 책-->
+    <select id = "selectCurrentBook" resultType="book">
+        select * from book
+        group by book_createAt desc
+        limit 3
+    </select>
+    <!--책 상세-->
+    <select id="selectDetailBook" parameterType="hashmap" resultType="book">
+        select * from book
+        where book_seq = #{book_seq}
+    </select>
+    <!--책 목록-->
+    <select id = "selectListBook" parameterType="hashmap" resultType="book">
+        select * from book
+        group by book_createAt desc
+        limit #{book_seq} , 6
+    </select>
+
+    <!--카트 리스트-->
+    <select id="selectCart" parameterType="hashmap" resultType="hashmap">
+        SELECT * FROM cart_detail
+        join book on cart_detail.book_book_seq = book.book_seq
+        where customer_customer_seq = #{customer_seq}
+    </select>
+    <!--카트 리스트 삭제-->
+    <delete id="deleteCart" parameterType="hashmap">
+        DELETE FROM cart_detail
+        WHERE customer_customer_seq = #{customer_seq}
+        and book_book_seq = #{book_seq}
+    </delete>
+    <!--카트 책담기-->
+    <insert id="insertBookCart" parameterType="hashmap">
+        insert cart_detail(book_book_seq, customer_customer_seq) values (#{book_seq}, #{customer_seq})
+    </insert>
+    <select id="selectBookCart" parameterType="hashmap" resultType="hashmap">
+        select * from cart_detail
+        where book_book_seq = #{book_seq}
+        and customer_customer_seq = #{customer_seq}
+    </select>
+
+    <!--책 검색-->
+    <select id = "searchBook" parameterType="String" resultType="book">
+        select * from book
+        where  book_name like concat("%" ,#{search} ,"%");
+    </select>
+
+</mapper>

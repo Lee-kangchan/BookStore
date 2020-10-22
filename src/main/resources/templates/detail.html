@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>MainPage</title>
+    <link rel="stylesheet" href="/static/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/assets/fonts/ionicons.min.css">
+    <link rel="stylesheet" href="/static/assets/css/Features-Boxed.css">
+    <link rel="stylesheet" href="/static/assets/css/Footer-Basic.css">
+    <link rel="stylesheet" href="/static/assets/css/Highlight-Phone.css">
+    <link rel="stylesheet" href="/static/assets/css/Navigation-with-Search.css">
+    <link rel="stylesheet" href="/static/assets/css/styles.css">
+</head>
+
+<body >
+<nav class="navbar navbar-light navbar-expand-md navigation-clean-search" style="background: rgba(239,251,245,0.65);">
+    <div class="container"><a class="navbar-brand" href="/home">it 서점</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse"
+             id="navcol-1">
+            <ul class="nav navbar-nav">
+                <li class="nav-item"></li>
+                <li class="nav-item"></li>
+                <li class="nav-item"></li>
+            </ul>
+            <form class="form-inline mr-auto" target="_self" method="post" action="/book">
+                <div class="form-group"><label for="search-field"><i class="fa fa-search" style="box-shadow: 0px 0px rgb(20,161,205);margin-right: 5px;"></i></label>
+                    <input class="form-control search-field" type="search" id="search-field" name="search" style="box-shadow: 0px 0px rgb(20,161,205);border-style: solid;border-color: rgba(51,51,51,0.94);border-bottom-width: 3px;border-bottom-style: solid;border-radius: 100px;width: 317px;"></div>
+            </form>
+            <ul class="nav navbar-nav">
+                <li class="nav-item"></li>
+                <li class="nav-item"><a class="nav-link" href="/mypage/order">주문</a></li>
+                <li class="nav-item"><a class="nav-link" href="/mypage/cart">장바구니</a></li>
+            </ul><a class="btn btn-light d-xl-flex justify-content-xl-end action-button" role="button" href="/mypage">Login</a></div>
+    </div>
+</nav>
+    <div class="container">
+    <div class="features-boxed" style="background: rgb(255,255,255);">
+        <div class="container">
+            <div class="intro">
+                <h2 class="text-center">BOOK</h2>
+            </div>
+        </div>
+    </div>
+    <div class="jumbotron" style="padding: 15px;width: 100%;height: 600px;" hovertext="This is the awesome example! Maybe small but very effective if you use it on texts, buttons or links!">
+        <p></p><img th:src="${book.book_img}" class="float-left" src="/static/assets/img/book2.jpg" style="width: 300px;margin: 50px;margin-right: 48px;margin-left: 50px;">
+        <p class="name" th:text="'제목: '+${book.book_name}" style="font-size: 28px;font-weight: bold;margin-top: 60px;">제목 : 의료 인공지능</p>
+        <p class="name" th:text="'가격: '+${book.book_price}" style="font-size: 20px;">가격 : 30000</p>
+        <p class="name" th:text="'수량: '+${book.book_amount}" style="font-size: 20px;">수량 : 30</p>
+        <p class="text-dark name" th:text="'MD 평: ' +${book.book_comment}" style="font-size: 20px;">MD 평 :&nbsp;</p>
+        <p class="text-body name" th:text="'책 내용:' +${book.book_detail}"style="font-size: 20px;height: 0px;min-height: 200px;">내용 : forestsdssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss ssssssssssssssssssssssssssssssssssssssssssssssss</p><button class="btn btn-primary" type="button" style="margin-right: 10px;min-width: 250px;">구매하기</button>
+        <button
+            class="btn btn-primary" type="button" style="margin-left: 10px;min-width: 250px;background: rgb(28,166,91);">장바구니</button>
+    </div>
+    <div class="jumbotron" style="padding: 15px;width: 100%;height: 600px;background: #ffffff;" hovertext="This is the awesome example! Maybe small but very effective if you use it on texts, buttons or links!">
+        <p class="text-dark name" style="font-size: 37px;font-weight: bold;margin-left: 20px;">전체 리뷰</p>
+        <ul class="list-group">
+            <li class="list-group-item" style="border-style: solid;border-right-style: none;border-bottom-style: solid;border-left-style: none;">
+                <p class="text-dark name" style="font-size: 20px;font-weight: bold;">번아웃 우리는 지쳤다.&nbsp; &nbsp;<small>작성자 : 이OO</small></p><span>'그냥 가만히 살고 싶다. 아무것도 하지 않을 자유'<br>가장 먼저 눈에 들어오는 책 표지의 문구다.아마 현대 사회를 살아가는 누구나 한 번쯤은 이 생각을 하며 살아가지 않을까 싶다.<br>내 주변도 그렇고, 뉴스 기사만 봐도 많은 사람들이 힘든 시기를 견디고 있다.어떻게는 행복하게 살기 위해 직장을 다니고, 사업을 하는 등 바쁘게 보낸다.하지만 그 중에서 행복하다는 사람보다 지치고 피곤한 사람들이 훨씬 더 많이 보인다.<br><br></span></li>
+        </ul>
+        <p class="text-dark name" style="font-size: 24px;font-weight: bold;margin-left: 20px;margin-bottom: 1px;margin-top: 31px;">한줄평</p>
+        <div class="col-12 col-sm-6 col-md-6 site-form" style="width: 100%;max-width: 100%;">
+                <div class="form-group"><label class="sr-only" for="email">Email Address</label><input class="form-control" type="text" id="email" name="title" required="" placeholder="Title"></div>
+                <div class="form-group"><label class="sr-only" for="messages">Last Name</label><textarea class="form-control" name="messages" required="" placeholder="Message" rows="8"></textarea></div>
+            <form id="my-form-1">
+                <div class="form-group"><label class="sr-only" for="email">Email Address</label></div>
+            </form><button class="btn btn-light btn-lg float-right" id="form-btn" type="submit" style="background: rgb(206,237,255);">SEND </button></div>
+    </div>
+    <div class="footer-basic">
+        <footer style="height: 145px;">
+            <div class="social"><a href="#"><i class="icon ion-social-instagram"></i></a><a href="#"><i class="icon ion-social-snapchat"></i></a><a href="#"><i class="icon ion-social-twitter"></i></a></div>
+            <ul class="list-inline" style="width: 100%;">
+                <li class="list-inline-item"><a href="#">Home</a></li>
+                <li class="list-inline-item"><a href="#">About</a></li>
+                <li class="list-inline-item"></li>
+            </ul>
+            <p class="copyright">it서점 © 2020</p>
+        </footer>
+    </div>
+    </div>
+    <main></main>
+    <script src="../static/assets/js/jquery.min.js"></script>
+    <script src="../static/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../static/assets/js/HoverText-Plugin-V1.js"></script>
+</body>
+
+</html>

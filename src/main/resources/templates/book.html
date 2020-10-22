@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>MainPage</title>
+    <link rel="stylesheet" href="../static/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="../static/assets/fonts/ionicons.min.css">
+    <link rel="stylesheet" href="../static/assets/css/Features-Boxed.css">
+    <link rel="stylesheet" href="../static/assets/css/Footer-Basic.css">
+    <link rel="stylesheet" href="../static/assets/css/Highlight-Phone.css">
+    <link rel="stylesheet" href="../static/assets/css/Navigation-with-Search.css">
+    <link rel="stylesheet" href="../static/assets/css/styles.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-light navbar-expand-md navigation-clean-search" style="background: rgba(239,251,245,0.65);">
+        <div class="container"><a class="navbar-brand" href="/home">it 서점</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse"
+                 id="navcol-1">
+                <ul class="nav navbar-nav">
+                    <li class="nav-item"></li>
+                    <li class="nav-item"></li>
+                    <li class="nav-item"></li>
+                </ul>
+                <form class="form-inline mr-auto" target="_self" method="post" action="/book">
+                    <div class="form-group"><label for="search-field"><i class="fa fa-search" style="box-shadow: 0px 0px rgb(20,161,205);margin-right: 5px;"></i></label><input class="form-control search-field" type="search" id="search-field" name="search" style="box-shadow: 0px 0px rgb(20,161,205);border-style: solid;border-color: rgba(51,51,51,0.94);border-bottom-width: 3px;border-bottom-style: solid;border-radius: 100px;width: 317px;"></div>
+                </form>
+                <ul class="nav navbar-nav">
+                    <li class="nav-item"></li>
+                    <li class="nav-item"><a class="nav-link" href="/mypage/order">주문</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/mypage/cart">장바구니</a></li>
+                </ul><a class="btn btn-light d-xl-flex justify-content-xl-end action-button" role="button" href="/mypage">Login</a></div>
+        </div>
+    </nav>
+    <div class="features-boxed" style="background: rgb(237, 238, 239);">
+        <div class="container">
+            <div class="intro">
+                <h2 class="text-center">책 목록</h2>
+            </div>
+            <div class="row justify-content-center features" style="background: rgb(237, 238, 239);">
+                <div th:each="c:${book}" class="col-sm-6 col-md-5 col-lg-4 item" style="background-color: rgb(237, 238, 239);">
+                    <div class="box" style="background: rgb(237, 238, 239);"><a th:href="'/book/detail/'+${c.book_seq}" ><img th:src="${c.book_img}" style="margin: 10px;width: 185px;"></a>
+                        <h3 th:text="${c.book_name}" class="name">AI 마인드</h3>
+                        <p th:text="${c.book_comment}"class="description">AI 관련 책입니다</p>
+                        <p th:text="${c.book_price}+'원'"class="description">AI 관련 책입니다</p>
+                        <button th:onclick="'location.href=\''+ @{/order/{bookSeq}(bookSeq=${c.book_seq})}+'\';'" class="btn btn-primary" type="button" style="background: rgb(50,137,231);">구매하기
+                        </button><button th:onclick="'cart('+ @{{bookSeq}(bookSeq=${c.book_seq})}+')'"class="btn btn-primary" type="button" style="background: rgb(28,166,91);margin-top: 0px;margin-left: 13px;">장바구니</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-basic">
+        <div class="text-center" style="height: 101px;">
+            <button th:if="${first}!='0'" th:text="${first}" th:onclick="'location.href=\'' + @{/book/{first}(first=${first})} +'\';'"
+                    class="btn btn-primary border rounded-circle" type="button" style="color: rgb(0,0,0);background-color: rgba(0,123,255,0);margin-right: 10px;">2</button>
+            <button th:if="${second}!='0'" th:text="${second}" th:onclick="'location.href=\''+ @{/book/{second}(second=${second})}+'\';'"
+                    class="btn btn-primary border rounded-circle" type="button" style="color: rgb(0,0,0);background-color: rgba(0,123,255,0);margin-right: 10px;">2</button>
+            <button th:if="${third}!='0'" th:text="${third}" th:onclick="'location.href=\'' + @{/book/{third}(third=${third})}+ '\';'"
+                    class="btn btn-primary border rounded-circle" type="button" style="background-color: rgba(0,123,255,0);color: rgb(0,0,0);margin-right: 10px;">3</button>
+            </div>
+        <footer
+            style="height: 145px;">
+            <div class="social"><a href="#"><i class="icon ion-social-instagram"></i></a><a href="#"><i class="icon ion-social-snapchat"></i></a><a href="#"><i class="icon ion-social-twitter"></i></a></div>
+            <ul class="list-inline">
+                <li class="list-inline-item"><a href="#">Home</a></li>
+                <li class="list-inline-item"><a href="#">About</a></li>
+                <li class="list-inline-item"></li>
+            </ul>
+            <p class="copyright">it서점 © 2020</p>
+            </footer>
+    </div>
+    <main></main>
+    <script src="../static/assets/js/jquery.min.js"></script>
+    <script src="../static/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script>
+    function cart(book) {
+        $.ajax({
+            url: "/cart/"+book,
+            type:"GET",
+            dataType : "json",
+            cache: false,
+            success: function (result){
+                console.log(result)
+                if(result.result == 'N')
+                { alert("이미 장바구니에 있습니다.")}
+                if(result.result == 'Y'){
+                    alert("장바구니에 추가되었습니다.")
+                }
+                if(result.result == 'S'){
+                    location.href = "/login"
+                }
+            }
+            ,error: function (e){
+                console.log(e)
+            }
+
+        })
+        }
+    </script>
+</body>
+
+</html>

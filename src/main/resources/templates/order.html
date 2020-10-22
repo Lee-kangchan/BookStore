@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Order</title>
+    <link rel="stylesheet" href="../static/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="../static/assets/css/Checkbox.css">
+    <link rel="stylesheet" href="../static/assets/css/ensign-form-1.css">
+    <link rel="stylesheet" href="../static/assets/css/ensign-form.css">
+    <link rel="stylesheet" href="../static/assets/css/Features-Boxed.css">
+    <link rel="stylesheet" href="../static/assets/css/Footer-Basic.css">
+    <link rel="stylesheet" href="../static/assets/css/Highlight-Phone.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="../static/assets/css/Navigation-with-Search.css">
+    <link rel="stylesheet" href="../static/assets/css/Off-Canvas-Sidebar-Drawer-Navbar.css">
+    <link rel="stylesheet" href="../static/assets/css/Sidebar-1-1.css">
+    <link rel="stylesheet" href="../static/assets/css/Sidebar-1-2.css">
+    <link rel="stylesheet" href="../static/assets/css/sidebar-1.css">
+    <link rel="stylesheet" href="../static/assets/css/Sidebar-Cool-SB-Admin-Inspirate.css">
+    <link rel="stylesheet" href="../static/assets/css/sidebar.css">
+    <link rel="stylesheet" href="../static/assets/css/styles.css">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+
+</head>
+
+<body style="color: rgb(106,114,122);">
+    <nav class="navbar navbar-light navbar-expand-md navigation-clean-search" style="background: rgba(239,251,245,0.65);margin-bottom: 1px;">
+        <div class="container"><a class="navbar-brand" href="/home">ND 서점</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse"
+                 id="navcol-1">
+                <ul class="nav navbar-nav">
+                    <li class="nav-item"></li>
+                    <li class="nav-item"></li>
+                    <li class="nav-item"></li>
+                </ul>
+                <form class="form-inline mr-auto" target="_self" method="post" action="/book">
+                    <div class="form-group"><label for="search-field"><i class="fa fa-search" style="box-shadow: 0px 0px rgb(20,161,205);margin-right: 5px;"></i></label><input class="form-control search-field" type="search" id="search-field" name="search" style="box-shadow: 0px 0px rgb(20,161,205);border-style: solid;border-color: rgba(51,51,51,0.94);border-bottom-width: 3px;border-bottom-style: solid;border-radius: 100px;width: 317px;"></div>
+                </form>
+                <ul class="nav navbar-nav">
+                    <li class="nav-item"></li>
+                    <li class="nav-item"><a class="nav-link" href="/mypage/order">주문</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/mypage/cart">장바구니</a></li>
+                </ul><a class="btn btn-light d-xl-flex justify-content-xl-end action-button" role="button" href="/mypage">Login</a></div>
+        </div>
+    </nav>
+    <div class="container features-boxed" style="background: rgb(255,255,255);">
+        <div class="container">
+            <div class="intro"></div>
+        </div>
+    </div>
+    <div  style="width: 100%;height: auto;">
+        <h2 class="text-center text-info">주문하기</h2>
+        <h2 class="text-left text-info" style="margin-left: 10px;">주문 목록</h2>
+        <div class="card" style="margin-bottom: 0px;width: 100%;border-bottom-style: none;height: auto;">
+            <div class="card" style="margin-bottom: 20px;width: 100%;"></div>
+            <div class="card-body" style="width: 100%;border-top-style: solid;border-bottom-style: none;"><img class="float-left" src="../static/assets/img/book1.jpg" style="width: 100px;margin-right: 34px;">
+                <h4 class="card-title" style="font-size: 20px;color: rgb(108,117,125);">제목 : AI 마인드<br></h4>
+                <h6 class="text-muted card-subtitle mb-2" style="font-size: 15px;margin-top: 3px;">내용 : AI 마인드 책 입니다</h6>
+                <div style = "float:right"class="plusMinus qty mt-5">
+                    <span class="minus bg-dark">-</span>
+                    <input type="number" class="count123" name="qty" value="1">
+                    <span class="plus bg-dark">+</span>
+                </div>
+            </div>
+
+            <div class="card" style="margin-bottom: 20px;width: 200%;"></div>
+            <nav class="navbar navbar-light navbar-expand-md" style="width: 100%;background: rgba(221,221,221,0.61);margin-bottom: 0px;height: 70px;">
+                <div class="container-fluid"><button class="navbar-toggler" data-toggle="collapse"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+                    <h6 class="text-right text-muted mb-2" style="font-size: 20px;margin-top: 3px;width: 100%;letter-spacing: 0px;line-height: 4px;font-weight: bold;">&nbsp;상품가격 106,000원</h6>
+                </div>
+            </nav>
+        </div>
+        <h2 class="text-left text-info" style="margin-left: 10px;margin-top: 10px;">주문 정보</h2>
+        <div style="height: 270px;background: #ffffff;">
+            <form class="bootstrap-form-with-validation" style="background: #ffffff;margin: 30px;" method = "post" action="/order">
+                <div class="form-group"><label for="text-input" style="font-weight: bold;">이름</label><input class="form-control" type="text" id="text-input" name="text-input"></div>
+                <div class="form-group"><label for="password-input" style="font-weight: bold;">배송주소</label><button class="btn btn-primary" type="button" style="height: 20px;font-size: 10px;padding: 0px;margin-left: 10px;padding-right: 1px;padding-left: 3px;">&nbsp;등록된 배송지 정보&nbsp;&nbsp;</button>
+                    <input
+                        class="form-control" type="password" id="password-input" name="password-input"></div>
+                <div class="form-group"><label for="password-input" style="font-weight: bold;">카드</label><button class="btn btn-primary" type="button" style="height: 20px;font-size: 10px;margin-left: 10px;padding: 0px;padding-right: 10px;padding-left: 10px;">등록된 카드 선택</button>
+                    <input
+                        class="form-control" type="password" id="password-input-1" name="password-input"></div>
+            </form><button class="btn btn-primary float-right" data-bs-hover-animate="pulse" type="button" style="background: rgb(111,146,235);border-radius: 205px;border-width: 0px;border-color: rgb(255,255,255);width: 100px;margin-top: 20px;margin-bottom: 20px;margin-right: 30px;">결제하기</button></div>
+    </div>
+    <main></main>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="../static/assets/js/jquery.min.js"></script>
+    <script src="../static/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../static/assets/js/bs-init.js"></script>
+    <script src="../static/assets/js/Off-Canvas-Sidebar-Drawer-Navbar.js"></script>
+    <script src="../static/assets/js/Off-Canvas-Sidebar-Drawer-Navbar-1.js"></script>
+</body>
+
+</html>

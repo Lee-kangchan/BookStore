@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.example.demo.mapper.CustomerMapper">
+
+
+	<!-- 회원가입 -->
+	<insert id = "insertCustomer" parameterType="hashmap">
+		insert customer(customer_name, customer_email, customer_password)
+		values (#{customer_name}, #{customer_email}, #{customer_password})
+	</insert>
+
+	<!-- 로그인 -->
+	<select id="login" parameterType="hashmap" resultType="customer">
+		select * from customer
+		where customer_email = #{customer_email}
+		and customer_password = #{customer_password}
+	</select>
+
+	<!-- 비밀번호 변경 -->
+	<update id = "updatePassword" parameterType="hashmap">
+		update customer set customer_password = #{customer_password}
+		where customer_email = #{customer_email}
+	</update>
+
+	<!-- 회원 탈퇴 -->
+	<delete id = "deleteCustomer" parameterType="hashmap">
+		delete from customer where customer_email = #{customer_email}
+		and customer_password = #{customer_password}
+	</delete>
+
+	<insert id = "AddressInsert" parameterType="hashmap">
+		Insert address(address_code, address_base, address_detail, customer_customer_seq) values(#{address_code} , #{address_base}, #{address_detail},#{customer_seq})
+	</insert>
+	<delete id="AddressDelete" parameterType="hashmap">
+		delete from address
+		where address_code = #{address_code}
+		and customer_customer_seq = #{customer_seq}
+	</delete>
+	<insert id="CardInsert" parameterType="hashmap">
+		Insert card(card_num, card_validity, card_type, customer_customer_seq)
+		values(#{card_num},#{card_validity},#{card_type},#{customer_seq})
+	</insert>
+	<delete id="CardDelete" parameterType="hashmap">
+		delete from card
+		where card_num = #{card_num}
+		and customer_customer_seq = #{customer_seq}
+	</delete>
+	<update id="passwordUpdate" parameterType="hashmap">
+		update customer set customer_password = #{customer_password}
+		where customer_seq = #{customer_seq};
+	</update>
+
+	<select id="selectCard" parameterType="hashmap" resultType="hashmap">
+		select * from card
+		where customer_customer_seq = #{customer_seq};
+
+	</select>
+	<select id="selectAddress" parameterType="hashmap" resultType="hashmap">
+		select * from address
+		where customer_customer_seq = #{customer_seq};
+
+	</select>
+</mapper> 
