@@ -96,7 +96,11 @@ public class CustomerServiceImpl implements CustomerService {
         List<HashMap<String, Object>> list = new ArrayList<>();
         list =customerDAO.selectCard(map);
         for(HashMap<String, Object> i : list){
-            i.toString();
+            logger.info(i.toString());
+            logger.info(i.get("card_num").toString());
+            logger.info(i.get("card_validity").toString());
+            logger.info(i.get("card_type").toString());
+
         }
         return customerDAO.selectCard(map);
     }
@@ -107,7 +111,7 @@ public class CustomerServiceImpl implements CustomerService {
         List<HashMap<String, Object>> list = new ArrayList<>();
         list =customerDAO.selectAddress(map);
         for(HashMap<String, Object> i : list){
-            i.toString();
+            logger.info(i.get("address_base").toString());
         }
         return customerDAO.selectAddress(map);
     }
