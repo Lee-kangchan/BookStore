@@ -26,7 +26,7 @@
 
 <body>
     <nav class="navbar navbar-light navbar-expand-md navigation-clean-search" style="background: rgba(239,251,245,0.65);margin-bottom: 1px;">
-        <div class="container"><a class="navbar-brand" href="/home">ND 서점</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+        <div class="container"><a class="navbar-brand" href="/home">it 서점</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse"
                  id="navcol-1">
                 <ul class="nav navbar-nav">
@@ -97,8 +97,9 @@
                 <div class="info-box"><i class="fa fa-cc-mastercard my-info-icons"></i><span class="text-uppercase text-info">카드 관리<br></span></div>
                 <div th:each = "c:${card}"class="card" style="margin-bottom: 20px;width: 375px;">
                     <div class="card-body" style="width: 378px;">
-                        <h4 th:text = "'카드번호: '+${c.card_num}" class="card-title" style="font-size: 20px;">카드번호 : 4040-4040-4040-4040</h4>
-                        <h6 th:text = "'유효기간: '+$(c.card_validity}" class="text-muted card-subtitle mb-2" style="font-size: 15px;">유효기간 :&nbsp; 22년 10월</h6>
+                        <h4 th:text = "'카드번호: '+${c.card_num}" class="card-title" style="font-size: 20px;"/>
+                        <h6 th:text = "'유효기간: '+${c.card_validity}" class="text-muted card-subtitle mb-2" style="font-size: 15px;"/>
+
                         <button th:onclick="'location.href=\''+ @{/card/{cardSeq}(cardSeq=${c.card_seq})}+'\';'" class="btn btn-primary float-right" type="button" style="background: rgb(235,111,111);border-radius: 205px;border-width: 0px;border-color: rgb(255,255,255);">삭제</button>
                         <p th:text ="'카드종류: '+${c.card_type}" class="card-text" style="font-size: 13px;">카드 종류 : 국민은행 나라사랑카드</p>
                     </div>

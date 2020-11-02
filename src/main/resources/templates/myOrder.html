@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="utf-8">
@@ -25,57 +25,57 @@
 </head>
 
 <body style="color: rgb(106,114,122);">
-    <nav class="navbar navbar-light navbar-expand-md navigation-clean-search" style="background: rgba(239,251,245,0.65);margin-bottom: 1px;">
-        <div class="container"><a class="navbar-brand" href="/home">ND 서점</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse"
-                 id="navcol-1">
-                <ul class="nav navbar-nav">
-                    <li class="nav-item"></li>
-                    <li class="nav-item"></li>
-                    <li class="nav-item"></li>
-                </ul>
-                <form class="form-inline mr-auto" target="_self" method="post" action="/book">
-                    <div class="form-group"><label for="search-field"><i class="fa fa-search" style="box-shadow: 0px 0px rgb(20,161,205);margin-right: 5px;"></i></label><input class="form-control search-field" type="search" id="search-field" name="search" style="box-shadow: 0px 0px rgb(20,161,205);border-style: solid;border-color: rgba(51,51,51,0.94);border-bottom-width: 3px;border-bottom-style: solid;border-radius: 100px;width: 317px;"></div>
-                </form>
-                <ul class="nav navbar-nav">
-                    <li class="nav-item"></li>
-                    <li class="nav-item"><a class="nav-link" href="/mypage/order">주문</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/mypage/cart">장바구니</a></li>
-                </ul><a class="btn btn-light d-xl-flex justify-content-xl-end action-button" role="button" href="/mypage">Login</a></div>
-        </div>
-    </nav>
-    <div class="features-boxed" style="background: rgb(255,255,255);">
-        <div class="container">
-            <div class="intro"></div>
-        </div>
+<nav class="navbar navbar-light navbar-expand-md navigation-clean-search" style="background: rgba(239,251,245,0.65);margin-bottom: 1px;">
+    <div class="container"><a class="navbar-brand" href="/home">ND 서점</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse"
+             id="navcol-1">
+            <ul class="nav navbar-nav">
+                <li class="nav-item"></li>
+                <li class="nav-item"></li>
+                <li class="nav-item"></li>
+            </ul>
+            <form class="form-inline mr-auto" target="_self" method="post" action="/book">
+                <div class="form-group"><label for="search-field"><i class="fa fa-search" style="box-shadow: 0px 0px rgb(20,161,205);margin-right: 5px;"></i></label><input class="form-control search-field" type="search" id="search-field" name="search" style="box-shadow: 0px 0px rgb(20,161,205);border-style: solid;border-color: rgba(51,51,51,0.94);border-bottom-width: 3px;border-bottom-style: solid;border-radius: 100px;width: 317px;"></div>
+            </form>
+            <ul class="nav navbar-nav">
+                <li class="nav-item"></li>
+                <li class="nav-item"><a class="nav-link" href="/mypage/order">주문</a></li>
+                <li class="nav-item"><a class="nav-link" href="/mypage/cart">장바구니</a></li>
+            </ul><a class="btn btn-light d-xl-flex justify-content-xl-end action-button" role="button" href="/mypage">Login</a></div>
     </div>
-    <div id="layoutSidenav" style="max-height: auto;background: #ffffff;width: 100%;">
-        <div id="layoutSidenav_nav" style="height: 100%;">
-            <div id="layoutSidenav_nav-1" style="height: 100%;width: 232px;">
-                <div id="sidenavAccordion" class="sb-sidenav accordion sb-sidenav-dark" style="height: 100%;">
-                    <div class="sb-sidenav-menu">
-                        <div class="nav" style="height: auto;min-height: 800px;">
-                            <div style="height: 645px;">
-                                <a data-bs-hover-animate="flash" class="nav-link active" href="/mypage">
-                                    <div class="sb-nav-link-icon"><i class="fa fa-child"></i></div><span>나의 정보</span></a>
-                                <a data-bs-hover-animate="flash" class="nav-link active" href="/mypage/order">
-                                    <div class="sb-nav-link-icon"><i class="fa fa-bus"></i></div><span>주문 정보</span></a>
-                                <a data-bs-hover-animate="flash" class="nav-link active" href="/mypage/cart">
-                                    <div class="sb-nav-link-icon"><i class="fa fa-shopping-cart"></i></div><span>장바구니</span></a>
-                                <a data-bs-hover-animate="flash" class="nav-link active" href="/mypage/delete">
-                                    <div class="sb-nav-link-icon"><i class="fa fa-user-times"></i></div><span>회원 탈퇴</span></a>
+</nav>
+<div class="features-boxed" style="background: rgb(255,255,255);">
+    <div class="container">
+        <div class="intro"></div>
+    </div>
+</div>
+<div id="layoutSidenav" style="max-height: auto;background: #ffffff;width: 100%;">
+    <div id="layoutSidenav_nav" style="height: 100%;">
+        <div id="layoutSidenav_nav-1" style="height: 100%;width: 232px;">
+            <div id="sidenavAccordion" class="sb-sidenav accordion sb-sidenav-dark" style="height: 100%;">
+                <div class="sb-sidenav-menu">
+                    <div class="nav" style="height: auto;min-height: 800px;">
+                        <div style="height: 645px;">
+                            <a data-bs-hover-animate="flash" class="nav-link active" href="/mypage">
+                                <div class="sb-nav-link-icon"><i class="fa fa-child"></i></div><span>나의 정보</span></a>
+                            <a data-bs-hover-animate="flash" class="nav-link active" href="/mypage/order">
+                                <div class="sb-nav-link-icon"><i class="fa fa-bus"></i></div><span>주문 정보</span></a>
+                            <a data-bs-hover-animate="flash" class="nav-link active" href="/mypage/cart">
+                                <div class="sb-nav-link-icon"><i class="fa fa-shopping-cart"></i></div><span>장바구니</span></a>
+                            <a data-bs-hover-animate="flash" class="nav-link active" href="/mypage/delete">
+                                <div class="sb-nav-link-icon"><i class="fa fa-user-times"></i></div><span>회원 탈퇴</span></a>
+                        </div>
+                        <div>
+                            <div id="collapseLayouts" class="collapse" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                                <div class="sb-sidenav-menu-nested nav"><a class="nav-link" href="#">Menu Accordion</a><a class="nav-link" href="#">Menu Accordion</a></div>
                             </div>
-                            <div>
-                                <div id="collapseLayouts" class="collapse" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
-                                    <div class="sb-sidenav-menu-nested nav"><a class="nav-link" href="#">Menu Accordion</a><a class="nav-link" href="#">Menu Accordion</a></div>
-                                </div>
-                            </div>
-                            <div>
-                                <div id="collapse2" class="collapse" aria-labelledby="heading2" data-parent="#sidenavAccordion">
-                                    <div id="sidenavAccordionPages" class="sb-sidenav-menu-nested nav accordion"><a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth"><span>Menu Item</span><div class="sb-sidenav-collapse-arrow"><i class="fa fa-angle-down"></i></div></a>
-                                        <div
+                        </div>
+                        <div>
+                            <div id="collapse2" class="collapse" aria-labelledby="heading2" data-parent="#sidenavAccordion">
+                                <div id="sidenavAccordionPages" class="sb-sidenav-menu-nested nav accordion"><a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth"><span>Menu Item</span><div class="sb-sidenav-collapse-arrow"><i class="fa fa-angle-down"></i></div></a>
+                                    <div
                                             id="pagesCollapseAuth" class="collapse" aria-labelledby="headingOne" data-parent="#sidenavAccordionPages">
-                                            <div class="sb-sidenav-menu-nested nav"><a class="nav-link" href="#">Menu Item</a><a class="nav-link" href="#">Menu Item</a><a class="nav-link" href="#">Menu Item</a></div>
+                                        <div class="sb-sidenav-menu-nested nav"><a class="nav-link" href="#">Menu Item</a><a class="nav-link" href="#">Menu Item</a><a class="nav-link" href="#">Menu Item</a></div>
                                     </div>
                                 </div>
                             </div>
@@ -89,43 +89,27 @@
         <main></main>
         <div class="col-md-12" style="width: 80%;">
             <h2 class="text-center text-info" style="margin-top: 20px;margin-bottom: 20px;">주문목록</h2>
-            <div class="card" style="margin-bottom: 20px;width: 100%;">
-                <div class="card-body" style="height: 190px;"><img class="float-left" src="../static/assets/img/book1.jpg" style="width: 100px;margin-right: 34px;">
-                    <h4 class="card-title" style="font-size: 20px;">주문번호: 10</h4>
-                    <h6 class="text-muted card-subtitle mb-2" style="font-size: 15px;">제목 : AI 마인드</h6>
-                    <h6 class="text-muted card-subtitle mb-2" style="font-size: 15px;margin-top: 3px;">주소 : 부산광역시 사상구 주례동 47 동서대학교 산학협력관 5203</h6>
-                    <h6 class="text-muted card-subtitle mb-2" style="font-size: 15px;margin-top: 3px;">주문 날짜 : 2020-10-09</h6>
-                    <p class="card-text" style="font-size: 13px;">가격 : 53000</p>
+            <div th:each="c:${book}" class="card" style="margin-bottom: 20px;width: 100%;">
+                <div class="card-body" style="height: 190px;">
+                    <img th:src="${c.book_img}" class="float-left" src="../static/assets/img/book1.jpg" style="width: 100px;margin-right: 34px;">
+                    <h4 th:text="'주문번호: '+${c.order_seq}" class="card-title" style="font-size: 20px;">주문번호: 10</h4>
+                    <h6 th:text="'제목: '+${c.book_name}" class="text-muted card-subtitle mb-2" style="font-size: 15px;">제목 : AI 마인드</h6>
+                    <h6 th:text="'주문 날짜: '+${c.book_createAt}"class="text-muted card-subtitle mb-2" style="font-size: 15px;margin-top: 3px;">주소 : 부산광역시 사상구 주례동 47 동서대학교 산학협력관 5203</h6>
+                    <h6 th:text="'주소: '+${c.order_address}"class="text-muted card-subtitle mb-2" style="font-size: 15px;margin-top: 3px;">주문 날짜 : 2020-10-09</h6>
+                    <p th:text="'가격: '+${c.book_price}*${c.order_detail_amount}" class="card-text" style="font-size: 13px;">가격 : 53000</p>
                 </div>
             </div>
-            <div class="card" style="margin-bottom: 20px;width: 100%;">
-                <div class="card-body" style="height: 190px;"><img class="float-left" src="../static/assets/img/book1.jpg" style="width: 100px;margin-right: 34px;">
-                    <h4 class="card-title" style="font-size: 20px;">주문번호: 10</h4>
-                    <h6 class="text-muted card-subtitle mb-2" style="font-size: 15px;">제목 : AI 마인드</h6>
-                    <h6 class="text-muted card-subtitle mb-2" style="font-size: 15px;margin-top: 3px;">주소 : 부산광역시 사상구 주례동 47 동서대학교 산학협력관 5203</h6>
-                    <h6 class="text-muted card-subtitle mb-2" style="font-size: 15px;margin-top: 3px;">주문 날짜 : 2020-10-09</h6>
-                    <p class="card-text" style="font-size: 13px;">가격 : 53000</p>
-                </div>
-            </div>
-            <div class="card" style="margin-bottom: 20px;width: 100%;">
-                <div class="card-body" style="height: 190px;"><img class="float-left" src="../static/assets/img/book1.jpg" style="width: 100px;margin-right: 34px;">
-                    <h4 class="card-title" style="font-size: 20px;">주문번호: 10</h4>
-                    <h6 class="text-muted card-subtitle mb-2" style="font-size: 15px;">제목 : AI 마인드</h6>
-                    <h6 class="text-muted card-subtitle mb-2" style="font-size: 15px;margin-top: 3px;">주소 : 부산광역시 사상구 주례동 47 동서대학교 산학협력관 5203</h6>
-                    <h6 class="text-muted card-subtitle mb-2" style="font-size: 15px;margin-top: 3px;">주문 날짜 : 2020-10-09</h6>
-                    <p class="card-text" style="font-size: 13px;">가격 : 53000</p>
-                </div>
-            </div>
+
         </div>
         <div></div>
     </div>
-    </div>
-    <main></main>
-    <script src="../static/assets/js/jquery.min.js"></script>
-    <script src="../static/assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="../static/assets/js/bs-init.js"></script>
-    <script src="../static/assets/js/Off-Canvas-Sidebar-Drawer-Navbar.js"></script>
-    <script src="../static/assets/js/Off-Canvas-Sidebar-Drawer-Navbar-1.js"></script>
+</div>
+<main></main>
+<script src="../static/assets/js/jquery.min.js"></script>
+<script src="../static/assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="../static/assets/js/bs-init.js"></script>
+<script src="../static/assets/js/Off-Canvas-Sidebar-Drawer-Navbar.js"></script>
+<script src="../static/assets/js/Off-Canvas-Sidebar-Drawer-Navbar-1.js"></script>
 </body>
 
 </html>

@@ -28,7 +28,7 @@
 
 <body style="color: rgb(106,114,122);">
     <nav class="navbar navbar-light navbar-expand-md navigation-clean-search" style="background: rgba(239,251,245,0.65);margin-bottom: 1px;">
-        <div class="container"><a class="navbar-brand" href="/home">ND 서점</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+        <div class="container"><a class="navbar-brand" href="/home">it 서점</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse"
                  id="navcol-1">
                 <ul class="nav navbar-nav">
@@ -51,22 +51,24 @@
             <div class="intro"></div>
         </div>
     </div>
-    <div  style="width: 100%;height: auto;">
+    <div class="container"  style="width: 100%;height: auto;">
         <h2 class="text-center text-info">주문하기</h2>
         <h2 class="text-left text-info" style="margin-left: 10px;">주문 목록</h2>
-        <div class="card" style="margin-bottom: 0px;width: 100%;border-bottom-style: none;height: auto;">
-            <div class="card" style="margin-bottom: 20px;width: 100%;"></div>
-            <div class="card-body" style="width: 100%;border-top-style: solid;border-bottom-style: none;"><img class="float-left" src="../static/assets/img/book1.jpg" style="width: 100px;margin-right: 34px;">
-                <h4 class="card-title" style="font-size: 20px;color: rgb(108,117,125);">제목 : AI 마인드<br></h4>
-                <h6 class="text-muted card-subtitle mb-2" style="font-size: 15px;margin-top: 3px;">내용 : AI 마인드 책 입니다</h6>
-                <div style = "float:right"class="plusMinus qty mt-5">
+        <div  class="card" style="margin-bottom: 0px;width: 100%;border-bottom-style: none;height: auto;">
+            <div   class="card" style="margin-bottom: 20px;width: 100%;"></div>
+            <div th:each="c:${book}" class="card-body" style="width: 100%;border-top-style: solid;border-bottom-style: none;"><img th:src="${c.book_img}" class="float-left" src="../static/assets/img/book1.jpg" style="width: 100px;margin-right: 34px;">
+                <h4 th:text ="'책번호: ' + ${c.book_seq} " class="cardSeq" style="font-size: 20px;color : rgb(108,117,125);" /><br>
+                <h4 th:text ="'제목: ' + ${c.book_name} " class="card-title" style="font-size: 20px;color: rgb(108,117,125);"><br></h4>
+                <h6 th:text ="'한줄 평: ' + ${c.book_comment} "class="text-muted card-subtitle mb-2" style="font-size: 15px;margin-top: 3px;"></h6>
+                <h6 th:text ="'가격: '+ ${c.book_price} "class="text-muted card-subtitle mb-2" style="font-size: 15px;margin-top: 3px;"></h6>
+                <div style = "float:right" class="plusMinus qty mt-2">
                     <span class="minus bg-dark">-</span>
+                    <input type="hidden" class="bookSeq" name="bookSeq" th:value="${c.book_seq}"/>
                     <input type="number" class="count123" name="qty" value="1">
                     <span class="plus bg-dark">+</span>
                 </div>
             </div>
 
-            <div class="card" style="margin-bottom: 20px;width: 200%;"></div>
             <nav class="navbar navbar-light navbar-expand-md" style="width: 100%;background: rgba(221,221,221,0.61);margin-bottom: 0px;height: 70px;">
                 <div class="container-fluid"><button class="navbar-toggler" data-toggle="collapse"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
                     <h6 class="text-right text-muted mb-2" style="font-size: 20px;margin-top: 3px;width: 100%;letter-spacing: 0px;line-height: 4px;font-weight: bold;">&nbsp;상품가격 106,000원</h6>
@@ -76,16 +78,71 @@
         <h2 class="text-left text-info" style="margin-left: 10px;margin-top: 10px;">주문 정보</h2>
         <div style="height: 270px;background: #ffffff;">
             <form class="bootstrap-form-with-validation" style="background: #ffffff;margin: 30px;" method = "post" action="/order">
-                <div class="form-group"><label for="text-input" style="font-weight: bold;">이름</label><input class="form-control" type="text" id="text-input" name="text-input"></div>
-                <div class="form-group"><label for="password-input" style="font-weight: bold;">배송주소</label><button class="btn btn-primary" type="button" style="height: 20px;font-size: 10px;padding: 0px;margin-left: 10px;padding-right: 1px;padding-left: 3px;">&nbsp;등록된 배송지 정보&nbsp;&nbsp;</button>
-                    <input
-                        class="form-control" type="password" id="password-input" name="password-input"></div>
-                <div class="form-group"><label for="password-input" style="font-weight: bold;">카드</label><button class="btn btn-primary" type="button" style="height: 20px;font-size: 10px;margin-left: 10px;padding: 0px;padding-right: 10px;padding-left: 10px;">등록된 카드 선택</button>
-                    <input
-                        class="form-control" type="password" id="password-input-1" name="password-input"></div>
-            </form><button class="btn btn-primary float-right" data-bs-hover-animate="pulse" type="button" style="background: rgb(111,146,235);border-radius: 205px;border-width: 0px;border-color: rgb(255,255,255);width: 100px;margin-top: 20px;margin-bottom: 20px;margin-right: 30px;">결제하기</button></div>
+                <div class="form-group"><label for="text-input" style="font-weight: bold;">이름</label><input class="form-control" type="text" id="text-input" name="text1"></div>
+                <div class="form-group"><label for="text-input2" style="font-weight: bold;">배송주소</label>
+                    <button  id="addressBtn"class="btn btn-primary" type="button" style="height: 20px;font-size: 10px;padding: 0px;margin-left: 10px;padding-right: 1px;padding-left: 3px;">&nbsp;등록된 배송지 정보&nbsp;&nbsp;</button>
+                    <input readonly
+                           class="form-control" type="text" id="text-input2" name="text2"></div>
+                <div class="form-group"><label for="text-input3" style="font-weight: bold;">카드</label>
+                    <button  id="cardBtn"class="btn btn-primary" type="button" style="height: 20px;font-size: 10px;margin-left: 10px;padding: 0px;padding-right: 10px;padding-left: 10px;">등록된 카드 선택</button>
+                    <input class="form-control" type="hidden" id="text-input4" name="text4" value="1">
+                    <input readonly  class="form-control" type="text" id="text-input3" name="text3"></div>
+
+            </form>
+            <button id="orderBtn" class="btn btn-primary float-right" data-bs-hover-animate="pulse" type="button" style="background: rgb(111,146,235);border-radius: 205px;border-width: 0px;border-color: rgb(255,255,255);width: 100px;margin-top: 20px;margin-bottom: 20px;margin-right: 30px;">결제하기</button></div>
     </div>
     <main></main>
+    <div class="modal fade" id="cardModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h4 class="modal-title w-100 font-weight-bold">카드 목록</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body mx-3" >
+                    <div th:each = "c:${card}"class="card" style="margin-bottom: 20px;width: 375px;">
+                    <div class="card-body" style="width: 378px;">
+                        <h4 th:text = "'카드번호: '+${c.card_num}" class="card-title" style="font-size: 20px;"/>
+                        <h6 th:text = "'유효기간: '+${c.card_validity}" class="text-muted card-subtitle mb-2" style="font-size: 15px;"/>
+
+
+                        <button class="btn btn-primary float-right cardInsert" type="button" style="background: rgb(77,98,179);border-radius: 205px;border-width: 0px;border-color: rgb(255,255,255);">등록</button>
+                        <p th:text ="'카드종류: '+${c.card_type}" class="card-text" style="font-size: 13px;">카드 종류 : 국민은행 나라사랑카드</p>
+                        <input type="hidden" th:value="${c.card_seq}"/>
+                    </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="addressModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h4 class="modal-title w-100 font-weight-bold">주소 목록</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body mx-3" >
+                    <div th:each="a:${address}" class="card" style="margin-bottom: 20px;">
+                        <div class="card-body">
+                            <h4 th:text="'우편번호: '+ ${a.address_code} " class="card-title" style="font-size: 20px;">우편번호 : 47001</h4>
+                            <h6 th:text="'기본주소: '+ ${a.address_base} " class="text-muted card-subtitle mb-2" style="font-size: 15px;">기본주소 : 부산광역시 주례동 47</h6>
+                            <button  class="btn btn-primary float-right addressInsert" type="button" style="background: rgb(77,98,179);border-radius: 205px;border-width: 0px;border-color: rgb(255,255,255);">등록</button>
+                            <p  th:text="'상세주소: '+ ${a.address_detail} " class="card-text" style="font-size: 13px;">상세주소 : 동서대학교 산학협력관 5203</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="../static/assets/js/jquery.min.js"></script>
@@ -94,5 +151,65 @@
     <script src="../static/assets/js/Off-Canvas-Sidebar-Drawer-Navbar.js"></script>
     <script src="../static/assets/js/Off-Canvas-Sidebar-Drawer-Navbar-1.js"></script>
 </body>
+<script>
+$(document).ready(function(){
+    $("#orderBtn").click(function(){
+        var length = $(".bookSeq").length;
+        var arr = [];
+
+        for(var i=0; i<length; i++){
+        arr.push({book_seq : $(".bookSeq").eq(i).val(), amount : $(".count123").eq(i).val()});
+        
+        }
+        arr[0].name =  $("#text-input").val();
+        arr[0].address = $("#text-input2").val();
+        arr[0].card_seq = $("#text-input4").val();
+        console.log(arr[0].name)
+        console.log(arr[0].address)
+        console.log(arr[0].card_seq)
+
+        console.log(JSON.stringify(arr))
+
+        $.ajax({
+            url: "/order",
+            type:"POST",
+            data: JSON.stringify(arr),
+            dataType : "json",
+            contentType : "application/json",
+            cache: false,
+            success: function (result){
+                alert("주문 완료 하였습니다")
+                location.href="/home";
+            }
+            ,error: function (e){
+                console.log(e)
+            }
+
+        })
+
+    })
+    $("#addressBtn").click(function(){
+        $("#addressModal").modal("show")
+    })
+    $("#cardBtn").click(function(){
+        $("#cardModal").modal("show")
+    })
+    $(".addressInsert").click(function(){
+        var code = $(this).prev().prev().text().replace("우편번호: ","")
+        var base = $(this).prev().text().replace("기본주소: ","")
+        var detail = $(this).next().text().replace("상세주소: ","")
+        $("#text-input2").val("("+code+")"+base+" "+ detail)
+        $("#addressModal").modal("hide")
+    })
+    $(".cardInsert").click(function(){
+        var card = $(this).next().text().replace("카드종류: ","")
+        var hidden = $(this).next().next().val();
+        $("#text-input3").val(card)
+        $("#text-input4").val(hidden)
+        $("#cardModal").modal("hide")
+    })
+})
+
+</script>
 
 </html>

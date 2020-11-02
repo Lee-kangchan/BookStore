@@ -50,8 +50,10 @@
         <p class="name" th:text="'가격: '+${book.book_price}" style="font-size: 20px;">가격 : 30000</p>
         <p class="name" th:text="'수량: '+${book.book_amount}" style="font-size: 20px;">수량 : 30</p>
         <p class="text-dark name" th:text="'MD 평: ' +${book.book_comment}" style="font-size: 20px;">MD 평 :&nbsp;</p>
-        <p class="text-body name" th:text="'책 내용:' +${book.book_detail}"style="font-size: 20px;height: 0px;min-height: 200px;">내용 : forestsdssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss ssssssssssssssssssssssssssssssssssssssssssssssss</p><button class="btn btn-primary" type="button" style="margin-right: 10px;min-width: 250px;">구매하기</button>
-        <button
+        <p class="text-body name" th:text="'책 내용:' +${book.book_detail}"style="font-size: 20px;height: 0px;min-height: 200px;">내용</p>
+        <button th:onclick="'location.href=\''+ @{/order/{bookSeq}(bookSeq=${book.book_seq})}+'\';'"
+                class="btn btn-primary" type="button" style="margin-right: 10px;min-width: 250px;">구매하기</button>
+        <button th:onclick="'cart('+ @{{bookSeq}(bookSeq=${book.book_seq})}+')'"
             class="btn btn-primary" type="button" style="margin-left: 10px;min-width: 250px;background: rgb(28,166,91);">장바구니</button>
     </div>
     <div class="jumbotron" style="padding: 15px;width: 100%;height: 600px;background: #ffffff;" hovertext="This is the awesome example! Maybe small but very effective if you use it on texts, buttons or links!">
@@ -81,9 +83,34 @@
     </div>
     </div>
     <main></main>
-    <script src="../static/assets/js/jquery.min.js"></script>
-    <script src="../static/assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="../static/assets/js/HoverText-Plugin-V1.js"></script>
+
+<script src="../static/assets/js/jquery.min.js"></script>
+<script src="../static/assets/bootstrap/js/bootstrap.min.js"></script>
+<script>
+    function cart(book) {
+        $.ajax({
+            url: "/cart/"+book,
+            type:"GET",
+            dataType : "json",
+            cache: false,
+            success: function (result){
+                console.log(result)
+                if(result.result == 'N')
+                { alert("이미 장바구니에 있습니다.")}
+                if(result.result == 'Y'){
+                    alert("장바구니에 추가되었습니다.")
+                }
+                if(result.result == 'S'){
+                    location.href = "/login"
+                }
+            }
+            ,error: function (e){
+                console.log(e)
+            }
+
+        })
+        }
+    </script>
 </body>
 
 </html>
