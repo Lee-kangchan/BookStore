@@ -28,8 +28,9 @@ public class BookController {
 
 
     @GetMapping("/home")
-    public String home(Model model){
+    public String home(Model model, HttpSession session){
         List<Book> book = bookService.selectCurrentBook();
+        model.addAttribute("name", session.getAttribute("customer_name"));
         for(Book bo :book){
             logger.info(bo.toString());
         }
@@ -48,6 +49,7 @@ public class BookController {
         for(Book bo :book){
             logger.info(bo.toString());
         }
+        model.addAttribute("name", session.getAttribute("customer_name"));
 
         model.addAttribute("login", session.getAttribute("customer_id"));
         model.addAttribute("login_seq", session.getAttribute("customer_seq"));
@@ -71,6 +73,7 @@ public class BookController {
         for(Book b :book) {
             logger.info(b.toString());
         }
+        model.addAttribute("name", session.getAttribute("customer_name"));
         model.addAttribute("first", 0);
         model.addAttribute("second", 0);
         model.addAttribute("third",0);
@@ -82,6 +85,7 @@ public class BookController {
         map.put("book_seq", Integer.parseInt(seq));
         Book book = bookService.selectDetailBook(map);
         book.setBook_img(book.getBook_img().replace("..",""));
+        model.addAttribute("name", session.getAttribute("customer_name"));
         model.addAttribute("book", book);
         return "detail";
     }
@@ -117,6 +121,7 @@ public class BookController {
 
         model.addAttribute("book",book);
         model.addAttribute("money", money);
+        model.addAttribute("name", session.getAttribute("customer_name"));
         return "cart";
     }
     @GetMapping("/cart/delete/{seq}")
@@ -140,8 +145,11 @@ public class BookController {
             logger.info(m.get("book_name").toString());
             logger.info(m.get("book_comment").toString());
         }
+        model.addAttribute("name", session.getAttribute("customer_name"));
         model.addAttribute("card", customerService.selectCard(map));
         model.addAttribute("address",customerService.selectAddress(map));
+
+        model.addAttribute("sales", session.getAttribute("sales"));
         model.addAttribute("money", Integer.parseInt(result.get(0).get("book_price").toString()));
         return "order";
     }
@@ -158,9 +166,12 @@ public class BookController {
             logger.info(m.get("book_comment").toString());
             money = money + Integer.parseInt(m.get("book_price").toString());
         }
+        model.addAttribute("name", session.getAttribute("customer_name"));
         model.addAttribute("card", customerService.selectCard(map));
         model.addAttribute("address",customerService.selectAddress(map));
         model.addAttribute("money", money);
+        model.addAttribute("sales", session.getAttribute("sales"));
+        model.addAttribute("sales_money", money /100 *(100-(Integer)session.getAttribute("sales")));
         return "order";
     }
     @ResponseBody
@@ -172,11 +183,12 @@ public class BookController {
         logger.info(list.get(0).get("card_seq").toString());
         for(HashMap<String, Object> map : list){
             map.put("customer_seq",session.getAttribute("customer_seq"));
+            map.put("price",Integer.parseInt(map.get("price").toString())*Integer.parseInt(map.get("amount").toString())/100 *(100-(Integer)session.getAttribute("sales")));
             logger.info(map.get("book_seq").toString());
             logger.info(map.get("amount").toString());
 
         }
-        bookService.order(list);
+        bookService.order(list, session);
     }
     @GetMapping("/mypage/order")
     public String myOrder(Model model, HttpSession session){
@@ -189,6 +201,7 @@ public class BookController {
 
 
         model.addAttribute("book",result);
+        model.addAttribute("name", session.getAttribute("customer_name"));
 
         return "myOrder";
     }

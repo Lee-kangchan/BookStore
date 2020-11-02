@@ -20,7 +20,9 @@ public interface BookMapper {
     public List<HashMap<String, Object>> bookCartOrder(HashMap<String, Object> map);
     public void insertOrder(HashMap<String, Object> map);
     public void insertOrderDetail(HashMap<String, Object> map);
-    public int selectOrder(HashMap<String, Object> map);
+    public Integer selectOrder(HashMap<String, Object> map);
     public List<HashMap<String, Object>> selectOrderDetail(HashMap<String, Object> map);
+    public void updateMembership(HashMap<String, Object> map);
+    public HashMap<String, Object> selectMembership(HashMap<String, Object> map);
 
 }

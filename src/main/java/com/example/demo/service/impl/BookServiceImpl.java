@@ -1,13 +1,17 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.controller.BookController;
 import com.example.demo.dao.BookDAO;
 import com.example.demo.service.BookService;
 import com.example.demo.vo.Book;
 import org.apache.ibatis.session.SqlSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 
@@ -16,6 +20,7 @@ public class BookServiceImpl implements BookService {
 
     @Autowired
     SqlSession sqlSession;
+    private static final Logger logger = LoggerFactory.getLogger(BookServiceImpl.class);
 
 
     @Override
@@ -85,16 +90,23 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    @Transactional
-    public void order(List<HashMap<String, Object>> map) {
+    public void order(List<HashMap<String, Object>> map, HttpSession session) {
         BookDAO dao = new BookDAO(sqlSession);
         dao.insertOrder(map.get(0));
-        int num = dao.selectOrder(map.get(0));
+        Integer num = dao.selectOrder(map.get(0));
         for(HashMap<String, Object> t : map){
+            logger.info("",num);
             t.put("order_seq",num);
             dao.insertOrderDetail(t);
             dao.deleteCart(t);
         }
+        HashMap<String, Object> membership = dao.selectMembership(map.get(0));
+        membership.put("customer_seq",map.get(0).get("customer_seq"));
+        logger.info("membership:"+membership.get("membership_num"));
+        logger.info("customer"+membership.get("customer_seq"));
+        dao.updateMembership(membership);
+        session.setAttribute("sales", membership.get("membership_sale"));
+
     }
     @Override
     public List<HashMap<String, Object>> selectOrderDetail(HashMap<String, Object> map){

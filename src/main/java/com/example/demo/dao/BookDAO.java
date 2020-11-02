@@ -58,7 +58,9 @@ public class BookDAO {
 
     public void insertOrder(HashMap<String, Object> map){mapper.insertOrder(map);}
     public void insertOrderDetail(HashMap<String, Object> map){mapper.insertOrderDetail(map);}
-    public int selectOrder(HashMap<String, Object> map){return mapper.selectOrder(map);};
+    public Integer selectOrder(HashMap<String, Object> map){return mapper.selectOrder(map);};
     public List<HashMap<String, Object>> selectOrderDetail(HashMap<String, Object> map){return mapper.selectOrderDetail(map);}
+    public void updateMembership(HashMap<String, Object> map){mapper.updateMembership(map);}
+    public HashMap<String, Object> selectMembership(HashMap<String, Object> map){ return mapper.selectMembership(map);}
 
 }

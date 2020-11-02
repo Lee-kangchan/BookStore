@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.service.BookService;
 import com.example.demo.service.CustomerService;
 import com.example.demo.service.impl.CustomerServiceImpl;
 import com.example.demo.vo.Customer;
@@ -21,11 +22,14 @@ public class MainController {
     @Autowired
     CustomerService customerService;
 
+    @Autowired
+    BookService bookService;
 
     private static final Logger logger = LoggerFactory.getLogger(MainController.class);
 
     @RequestMapping("/")
-    public String index(Model model){
+    public String index(Model model, HttpSession session){
+        model.addAttribute("name", session.getAttribute("customer_name"));
         model.addAttribute("msg", "<h1>END</h1> <br> <h2> end</h2>");
         return "index";
     }
@@ -40,6 +44,7 @@ public class MainController {
 
     @GetMapping("/sign")
     public String sign(Model model, HttpSession session){
+        model.addAttribute("name", session.getAttribute("customer_name"));
         model.addAttribute("login", session.getAttribute("customer_email"));
         model.addAttribute("login_seq", session.getAttribute("customer_seq"));
         return "sign";
@@ -48,6 +53,7 @@ public class MainController {
     public String mypage(Model model, HttpSession session){
         HashMap<String,Object> map = new HashMap<>();
         map.put("customer_seq", session.getAttribute("customer_seq"));
+        model.addAttribute("name", session.getAttribute("customer_name"));
         model.addAttribute("login", session.getAttribute("customer_email"));
         model.addAttribute("login_seq", session.getAttribute("customer_seq"));
         model.addAttribute("login_name", session.getAttribute("customer_name"));
@@ -59,12 +65,13 @@ public class MainController {
 
     @GetMapping("/mypage/delete")
     public String customerDelete (Model model, HttpSession session){
+        model.addAttribute("name", session.getAttribute("customer_name"));
         model.addAttribute("login", session.getAttribute("customer_id"));
         model.addAttribute("login_seq", session.getAttribute("customer_seq"));return "delete";}
 
     //회원 가입
     @PostMapping("sign")
-    public ModelAndView sign(@RequestParam HashMap<String, Object> customer, Model model){
+    public ModelAndView sign(@RequestParam HashMap<String, Object> customer, Model model, HttpSession session){
 
         logger.info("회원.");
         customerService.insertCustomer(customer);
@@ -77,6 +84,7 @@ public class MainController {
         else{
             mv.setViewName("redirect:/login");
         }
+        model.addAttribute("name", session.getAttribute("customer_name"));
 
         return mv;
     }
@@ -89,6 +97,7 @@ public class MainController {
         ModelAndView mv = new ModelAndView();
         Customer result = customerService.login(customer);
 
+        model.addAttribute("name", session.getAttribute("customer_name"));
         if ( result.getCustomer_email().isEmpty()){
 
         }
@@ -96,9 +105,10 @@ public class MainController {
             session.setAttribute("customer_email" , result.getCustomer_email());
             session.setAttribute("customer_seq", result.getCustomer_seq());
             session.setAttribute("customer_name", result.getCustomer_name());
+            session.setAttribute("sales", result.getMembership_sale());
             mv.setViewName("redirect:/home");
         }
-
+        model.addAttribute("name", session.getAttribute("customer_name"));
 
         return mv;
     }
@@ -107,6 +117,7 @@ public class MainController {
 
         logger.info("회원탈퇴입니다.");
         ModelAndView mv = new ModelAndView();
+        model.addAttribute("name", session.getAttribute("customer_name"));
         boolean result = customerService.deleteCustomer(customer);
         if(result == true && customer.get("Customer_email").equals(session.getAttribute("Customer_email"))){
             mv.setViewName("redirect:/login");
@@ -121,6 +132,7 @@ public class MainController {
         map.put("customer_seq", session.getAttribute("customer_seq"));
         customerService.CardInsert(map);
 
+        model.addAttribute("name", session.getAttribute("customer_name"));
         return "redirect:/mypage";
     }
     @GetMapping("/card/{seq}")
@@ -130,6 +142,7 @@ public class MainController {
         map.put("customer_seq", session.getAttribute("customer_seq"));
         customerService.CardDelete(map);
 
+        model.addAttribute("name", session.getAttribute("customer_name"));
 
         return "redirect:/mypage";
     }
@@ -137,6 +150,7 @@ public class MainController {
     public String addressInsert(@RequestParam HashMap<String, Object> map, Model model, HttpSession session){
         map.put("customer_seq", session.getAttribute("customer_seq"));
         customerService.AddressInsert(map);
+        model.addAttribute("name", session.getAttribute("customer_name"));
         return "redirect:/mypage";
     }
     @GetMapping("/address/{seq}")
@@ -146,6 +160,7 @@ public class MainController {
         map.put("customer_seq", session.getAttribute("customer_seq"));
         customerService.AddressDelete(map);
 
+        model.addAttribute("name", session.getAttribute("customer_name"));
         return "redirect:/mypage";
     }
     @PostMapping("/password") // ajax처리 해야댐
@@ -153,7 +168,12 @@ public class MainController {
         customer.put("customer_seq", session.getAttribute("customer_seq"));
         customerService.CardInsert(customer);
 
+        model.addAttribute("name", session.getAttribute("customer_name"));
         return "redirect:/mypage";
     }
+    @PostMapping("/review")
+    public void review(@RequestParam HashMap<String, Object> map, Model model, HttpSession session){
+        model.addAttribute("name", session.getAttribute("customer_name"));
 
+    }
 }
