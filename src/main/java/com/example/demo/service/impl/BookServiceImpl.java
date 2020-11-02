@@ -6,6 +6,7 @@ import com.example.demo.vo.Book;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
@@ -70,4 +71,34 @@ public class BookServiceImpl implements BookService {
         return "Y";
     }
 
+    @Override
+    public List<HashMap<String, Object>> bookOrder(HashMap<String, Object> map) {
+        BookDAO dao = new BookDAO(sqlSession);
+        return dao.bookOrder(map);
+
+    }
+
+    @Override
+    public List<HashMap<String, Object>> bookCartOrder(HashMap<String, Object> map) {
+        BookDAO dao = new BookDAO(sqlSession);
+        return dao.bookCartOrder(map);
+    }
+
+    @Override
+    @Transactional
+    public void order(List<HashMap<String, Object>> map) {
+        BookDAO dao = new BookDAO(sqlSession);
+        dao.insertOrder(map.get(0));
+        int num = dao.selectOrder(map.get(0));
+        for(HashMap<String, Object> t : map){
+            t.put("order_seq",num);
+            dao.insertOrderDetail(t);
+            dao.deleteCart(t);
+        }
+    }
+    @Override
+    public List<HashMap<String, Object>> selectOrderDetail(HashMap<String, Object> map){
+        BookDAO dao = new BookDAO(sqlSession);
+        return dao.selectOrderDetail(map);
+    }
 }

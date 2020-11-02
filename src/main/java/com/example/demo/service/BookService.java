@@ -14,5 +14,8 @@ public interface BookService {
     public Book selectDetailBook (HashMap<String, Object> map);
     public List<Book> searchBook (String map);
     public String insertBookCart(HashMap<String, Object> map);
-
+    public List<HashMap<String, Object>> bookOrder(HashMap<String, Object> map);
+    public List<HashMap<String, Object>> bookCartOrder(HashMap<String, Object> map);
+    public void order(List<HashMap<String, Object>> map);
+    public List<HashMap<String, Object>> selectOrderDetail(HashMap<String, Object> map);
 }
