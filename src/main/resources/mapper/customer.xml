@@ -35,7 +35,7 @@
 	</insert>
 	<delete id="AddressDelete" parameterType="hashmap">
 		delete from address
-		where address_code = #{address_code}
+		where address_seq = #{address_seq}
 		and customer_customer_seq = #{customer_seq}
 	</delete>
 	<insert id="CardInsert" parameterType="hashmap">
@@ -44,7 +44,7 @@
 	</insert>
 	<delete id="CardDelete" parameterType="hashmap">
 		delete from card
-		where card_num = #{card_num}
+		where card_seq = #{card_seq}
 		and customer_customer_seq = #{customer_seq}
 	</delete>
 	<update id="passwordUpdate" parameterType="hashmap">

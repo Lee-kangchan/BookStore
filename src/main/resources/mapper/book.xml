@@ -55,4 +55,36 @@
         where  book_name like concat("%" ,#{search} ,"%");
     </select>
 
+    <select id = "bookOrder" parameterType="hashmap" resultType="hashmap">
+        select * from book
+        where book_seq = #{book_seq}
+    </select>
+
+    <select id = "bookCartOrder" parameterType="hashmap" resultType="hashmap">
+        SELECT * FROM book
+        join cart_detail on book.book_seq = cart_detail.book_book_seq
+        where cart_detail.customer_customer_seq = #{customer_seq}
+    </select>
+    <insert id = "insertOrder" parameterType="hashmap">
+        insert order2(order_address, customer_customer_seq, card_card_seq) values(#{address}, #{customer_seq}, #{card_seq});
+    </insert>
+    <select id = "selectOrder" parameterType="hashmap" resultType="int">
+        SELECT * FROM bookstore1.order2
+        where order_address = #{address}
+        and card_card_seq = #{card_seq}
+        and customer_customer_seq = #{customer_seq}
+        order by order_createAt
+        limit 0,1
+    </select>
+    <insert id="insertOrderDetail" parameterType="hashmap">
+        insert order_detail(order_detail_amount, order_order_seq, book_book_seq) values(#{amount}, #{order_seq}, #{book_seq});
+    </insert>
+
+    <select id ="selectOrderDetail" parameterType="hashmap" resultType="hashmap">
+        select * from order_detail
+        join book on book_book_seq = book.book_seq
+        join order2 on order_order_seq = order2.order_seq
+        where order2.customer_customer_seq = #{customer_seq}
+    </select>
+
 </mapper>
