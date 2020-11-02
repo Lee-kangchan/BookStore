@@ -43,7 +43,9 @@
                     <li class="nav-item"></li>
                     <li class="nav-item"><a class="nav-link" href="/mypage/order">주문</a></li>
                     <li class="nav-item"><a class="nav-link" href="/mypage/cart">장바구니</a></li>
-                </ul><a class="btn btn-light d-xl-flex justify-content-xl-end action-button" role="button" href="/mypage">Login</a></div>
+                </ul><a th:if="${name == null}" class="btn btn-light d-xl-flex justify-content-xl-end action-button" role="button" href="/mypage">Login</a>
+
+                <a th:if="${name != null}"  th:text="${name}" class="btn btn-light d-xl-flex justify-content-xl-end action-button" role="button" href="/mypage">Login</a></div>
         </div>
     </nav>
     <div class="container features-boxed" style="background: rgb(255,255,255);">
@@ -62,16 +64,18 @@
                 <h6 th:text ="'한줄 평: ' + ${c.book_comment} "class="text-muted card-subtitle mb-2" style="font-size: 15px;margin-top: 3px;"></h6>
                 <h6 th:text ="'가격: '+ ${c.book_price} "class="text-muted card-subtitle mb-2" style="font-size: 15px;margin-top: 3px;"></h6>
                 <div style = "float:right" class="plusMinus qty mt-2">
-                    <span class="minus bg-dark">-</span>
+                    <input type="hidden" class="bookPrice" name = "bookPrice" th:value="${c.book_price}"/>
                     <input type="hidden" class="bookSeq" name="bookSeq" th:value="${c.book_seq}"/>
+                    <span class="minus bg-dark">-</span>
                     <input type="number" class="count123" name="qty" value="1">
                     <span class="plus bg-dark">+</span>
                 </div>
             </div>
 
             <nav class="navbar navbar-light navbar-expand-md" style="width: 100%;background: rgba(221,221,221,0.61);margin-bottom: 0px;height: 70px;">
-                <div class="container-fluid"><button class="navbar-toggler" data-toggle="collapse"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
-                    <h6 class="text-right text-muted mb-2" style="font-size: 20px;margin-top: 3px;width: 100%;letter-spacing: 0px;line-height: 4px;font-weight: bold;">&nbsp;상품가격 106,000원</h6>
+                <div class="container-fluid">
+                    <small style="float:left" th:text="'회원님은 '+${sales}+'% 할인 혜택을 받을 수 있습니다.'"> </small>
+                    <h6 th:text ="'상품가격: ' + ${money} " class="text-right text-muted mb-2" id="money" style="font-size: 20px;margin-top: 3px;width: 100%;letter-spacing: 0px;line-height: 4px;font-weight: bold; float:right">&nbsp;상품가격 106,000원</h6>
                 </div>
             </nav>
         </div>
@@ -158,7 +162,9 @@ $(document).ready(function(){
         var arr = [];
 
         for(var i=0; i<length; i++){
-        arr.push({book_seq : $(".bookSeq").eq(i).val(), amount : $(".count123").eq(i).val()});
+        arr.push({book_seq : $(".bookSeq").eq(i).val(),
+                  amount : $(".count123").eq(i).val(),
+                  price : $(".bookPrice").eq(i).val()});
         
         }
         arr[0].name =  $("#text-input").val();
@@ -179,7 +185,7 @@ $(document).ready(function(){
             cache: false,
             success: function (result){
                 alert("주문 완료 하였습니다")
-                location.href="/home";
+                location.href="/home"
             }
             ,error: function (e){
                 console.log(e)

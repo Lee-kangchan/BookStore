@@ -43,7 +43,9 @@
                     <li class="nav-item"></li>
                     <li class="nav-item"><a class="nav-link" href="/mypage/order">주문</a></li>
                     <li class="nav-item"><a class="nav-link" href="/mypage/cart">장바구니</a></li>
-                </ul><a class="btn btn-light d-xl-flex justify-content-xl-end action-button" role="button" href="/mypage">Login</a></div>
+                </ul><a th:if="${name == null}" class="btn btn-light d-xl-flex justify-content-xl-end action-button" role="button" href="/mypage">Login</a>
+
+                <a th:if="${name != null}"  th:text="${name}" class="btn btn-light d-xl-flex justify-content-xl-end action-button" role="button" href="/mypage">Login</a></div>
         </div>
     </nav>
     <div class="features-boxed" style="background: rgb(255,255,255);">
@@ -57,13 +59,13 @@
                 <div class="sb-sidenav-menu" style="height: auto;">
                     <div class="nav">
                         <div style="height: 645px;">
-                            <a data-bs-hover-animate="flash" class="nav-link active" href="#">
+                            <a data-bs-hover-animate="flash" class="nav-link active" href="/mypage">
                                 <div class="sb-nav-link-icon"><i class="fa fa-child"></i></div><span>나의 정보</span></a>
-                            <a data-bs-hover-animate="flash" class="nav-link active" href="#">
+                            <a data-bs-hover-animate="flash" class="nav-link active" href="/mypage/order">
                                 <div class="sb-nav-link-icon"><i class="fa fa-bus"></i></div><span>주문 정보</span></a>
-                            <a data-bs-hover-animate="flash" class="nav-link active" href="#">
+                            <a data-bs-hover-animate="flash" class="nav-link active" href="/mypage/cart">
                                 <div class="sb-nav-link-icon"><i class="fa fa-shopping-cart"></i></div><span>장바구니</span></a>
-                            <a data-bs-hover-animate="flash" class="nav-link active" href="#">
+                            <a data-bs-hover-animate="flash" class="nav-link active" href="/mypage/delete">
                                 <div class="sb-nav-link-icon"><i class="fa fa-user-times"></i></div><span>회원 탈퇴</span></a>
                         </div>
                         <div>
