@@ -13,12 +13,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.List;
 
 @Controller
 public class MainController {
 
     @Autowired
     CustomerService customerService;
+
 
     private static final Logger logger = LoggerFactory.getLogger(MainController.class);
 
@@ -53,18 +55,8 @@ public class MainController {
         model.addAttribute("address",customerService.selectAddress(map));
         return "mypage";
     }
-    @GetMapping("/mypage/order")
-    public String myOrder(Model model, HttpSession session){
 
-        model.addAttribute("login", session.getAttribute("customer_id"));
-        model.addAttribute("login_seq", session.getAttribute("customer_seq"));return "myOrder";
-    }
-    @GetMapping("/order")
-    public String order(Model model, HttpSession session){
 
-        model.addAttribute("login", session.getAttribute("customer_id"));
-        model.addAttribute("login_seq", session.getAttribute("customer_seq"));return "order";
-    }
     @GetMapping("/mypage/delete")
     public String customerDelete (Model model, HttpSession session){
         model.addAttribute("login", session.getAttribute("customer_id"));
@@ -134,7 +126,7 @@ public class MainController {
     @GetMapping("/card/{seq}")
     public String cardDelete(@PathVariable int seq, Model model, HttpSession session){
         HashMap<String, Object> map = new HashMap<>();
-        map.put("address_seq", seq);
+        map.put("card_seq", seq);
         map.put("customer_seq", session.getAttribute("customer_seq"));
         customerService.CardDelete(map);
 

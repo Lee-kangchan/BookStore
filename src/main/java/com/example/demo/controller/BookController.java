@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class BookController {
@@ -126,6 +127,70 @@ public class BookController {
         bookService.deleteCart(map);
 
         return "redirect:/mypage/cart";
+    }
+    @GetMapping("/order/{seq}")
+    public String bookOrder(HttpSession session, Model model,@PathVariable int seq){
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("book_seq", seq);
+        map.put("customer_seq", session.getAttribute("customer_seq"));
+        List<HashMap<String, Object>> result = bookService.bookOrder(map);
+        model.addAttribute("book",result);
+        for(Map<String ,Object> m : result){
+            logger.info(m.get("book_seq").toString());
+            logger.info(m.get("book_name").toString());
+            logger.info(m.get("book_comment").toString());
+        }
+        model.addAttribute("card", customerService.selectCard(map));
+        model.addAttribute("address",customerService.selectAddress(map));
+        model.addAttribute("money", Integer.parseInt(result.get(0).get("book_price").toString()));
+        return "order";
+    }
+    @GetMapping("/order/cart")
+    public String bookCartOrder(HttpSession session, Model model){
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("customer_seq", session.getAttribute("customer_seq"));
+        List<HashMap<String, Object>> result = bookService.bookCartOrder(map);
+        model.addAttribute("book", result);
+        int money = 0;
+        for(Map<String ,Object> m : result){
+            logger.info(m.get("book_seq").toString());
+            logger.info(m.get("book_name").toString());
+            logger.info(m.get("book_comment").toString());
+            money = money + Integer.parseInt(m.get("book_price").toString());
+        }
+        model.addAttribute("card", customerService.selectCard(map));
+        model.addAttribute("address",customerService.selectAddress(map));
+        model.addAttribute("money", money);
+        return "order";
+    }
+    @ResponseBody
+    @PostMapping(value = "/order", consumes = "application/json")
+    public void order(@RequestBody List<HashMap<String, Object>> list, HttpSession session){
+
+        logger.info(list.get(0).get("name").toString());
+        logger.info(list.get(0).get("address").toString());
+        logger.info(list.get(0).get("card_seq").toString());
+        for(HashMap<String, Object> map : list){
+            map.put("customer_seq",session.getAttribute("customer_seq"));
+            logger.info(map.get("book_seq").toString());
+            logger.info(map.get("amount").toString());
+
+        }
+        bookService.order(list);
+    }
+    @GetMapping("/mypage/order")
+    public String myOrder(Model model, HttpSession session){
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("customer_seq",session.getAttribute("customer_seq"));
+        List<HashMap<String, Object>> result = bookService.selectOrderDetail(map);
+        for(HashMap<String, Object> t : result){
+            t.get("order_seq").toString();
+        }
+
+
+        model.addAttribute("book",result);
+
+        return "myOrder";
     }
 
 }
