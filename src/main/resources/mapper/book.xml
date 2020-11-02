@@ -68,8 +68,8 @@
     <insert id = "insertOrder" parameterType="hashmap">
         insert order2(order_address, customer_customer_seq, card_card_seq) values(#{address}, #{customer_seq}, #{card_seq});
     </insert>
-    <select id = "selectOrder" parameterType="hashmap" resultType="int">
-        SELECT * FROM bookstore1.order2
+    <select id = "selectOrder" parameterType="hashmap" resultType="integer">
+        SELECT order_seq FROM bookstore2.order2
         where order_address = #{address}
         and card_card_seq = #{card_seq}
         and customer_customer_seq = #{customer_seq}
@@ -77,7 +77,7 @@
         limit 0,1
     </select>
     <insert id="insertOrderDetail" parameterType="hashmap">
-        insert order_detail(order_detail_amount, order_order_seq, book_book_seq) values(#{amount}, #{order_seq}, #{book_seq});
+        insert order_detail(order_detail_amount, order_detail_price, order_order_seq, book_book_seq) values(#{amount},#{price}, #{order_seq}, #{book_seq});
     </insert>
 
     <select id ="selectOrderDetail" parameterType="hashmap" resultType="hashmap">
@@ -85,6 +85,18 @@
         join book on book_book_seq = book.book_seq
         join order2 on order_order_seq = order2.order_seq
         where order2.customer_customer_seq = #{customer_seq}
+    </select>
+    <update id ="updateMembership" parameterType="hashmap">
+            update customer set customer.membership_membership_num = #{membership_num}
+            where customer_seq = #{customer_seq}
+    </update>
+    <select id="selectMembership" parameterType="hashmap" resultType="hashmap">
+        <![CDATA[
+            select * from membership
+            where membership_condition < (select sum(order_detail_price) from  order_detail join order2 on order2.order_seq = order_order_seq where customer_customer_seq =1)
+            order by membership_sale desc
+            limit 0,1
+        ]]>
     </select>
 
 </mapper>

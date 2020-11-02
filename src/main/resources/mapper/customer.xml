@@ -14,6 +14,7 @@
 	<!-- 로그인 -->
 	<select id="login" parameterType="hashmap" resultType="customer">
 		select * from customer
+		join membership on membership.membership_num = customer.membership_membership_num
 		where customer_email = #{customer_email}
 		and customer_password = #{customer_password}
 	</select>
