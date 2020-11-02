@@ -6,12 +6,12 @@ $(document).ready(function(){
 		$(document).ready(function(){
 		    $('.count123').prop('disabled', true);
    			$(document).on('click','.plus',function(){
-				$('.count123').val(parseInt($('.count123').val()) + 1 );
+				$(this).prev().val(parseInt($(this).prev().val()) + 1 );
     		});
         	$(document).on('click','.minus',function(){
-    			$('.count123').val(parseInt($('.count123').val()) - 1 );
-    				if ($('.count123').val() == 0) {
-						$('.count123').val(1);
+    			$(this).next().val(parseInt($(this).next().val()) - 1 );
+    				if ($(this).next().val() == 0) {
+						$(this).next().val(1);
 					}
     	    	});
  		});
