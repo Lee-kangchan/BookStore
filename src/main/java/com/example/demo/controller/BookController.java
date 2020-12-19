@@ -178,12 +178,11 @@ public class BookController {
     @PostMapping(value = "/order", consumes = "application/json")
     public void order(@RequestBody List<HashMap<String, Object>> list, HttpSession session){
 
-        logger.info(list.get(0).get("name").toString());
         logger.info(list.get(0).get("address").toString());
         logger.info(list.get(0).get("card_seq").toString());
         for(HashMap<String, Object> map : list){
             map.put("customer_seq",session.getAttribute("customer_seq"));
-            map.put("price",Integer.parseInt(map.get("price").toString())*Integer.parseInt(map.get("amount").toString())/100 *(100-(Integer)session.getAttribute("sales")));
+            map.put("price",Integer.parseInt(map.get("price").toString())*Integer.parseInt(map.get("amount").toString())/100 );
             logger.info(map.get("book_seq").toString());
             logger.info(map.get("amount").toString());
 
